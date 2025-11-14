@@ -1,32 +1,18 @@
 import { Elysia } from 'elysia'
-import { openapi, fromTypes } from '@elysiajs/openapi'
-import { cors } from '@elysiajs/cors'
 
-import { otel } from '@api/modules'
+import { config, EnvironmentVariables } from '@api/modules/config'
 
-export const app = new Elysia()
-    .use(
-        openapi({
-            references: fromTypes(
-                process.env.NODE_ENV === 'production'
-                    ? 'dist/src/index.d.ts'
-                    : 'src/index.ts'
-            )
-        })
-    )
-    .use(otel)
-    .use(
-        cors({
-            origin: 'http://localhost:3000'
-        })
-    )
-    .get('/', () => 'Hello Elysia')
-    .listen(Bun.env.PORT ?? 3001)
+export const app = new Elysia({ name: 'app' })
+    .use(config)
+    .get('/', () => 'Hello Worl')
+    .listen(EnvironmentVariables.PORT)
 
 process.on('beforeExit', app.stop)
+process.on('SIGINT', app.stop)
+process.on('SIGTERM', app.stop)
 
 export type app = typeof app
 
 console.log(
-    `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+    `🔐 Auth Server is running at ${app.server?.hostname}:${app.server?.port}`
 )
