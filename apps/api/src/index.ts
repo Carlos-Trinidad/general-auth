@@ -4,12 +4,10 @@ import { config, EnvironmentVariables } from '@api/modules/config'
 
 export const app = new Elysia({ name: 'app' })
     .use(config)
-    .get('/', () => 'Hello Worl')
+    .get('/', () => 'Hello World')
     .listen(EnvironmentVariables.PORT)
 
-process.on('beforeExit', app.stop)
-process.on('SIGINT', app.stop)
-process.on('SIGTERM', app.stop)
+process.on('exit', app.stop)
 
 export type app = typeof app
 

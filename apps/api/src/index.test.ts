@@ -1,13 +1,14 @@
 import { describe, it, expect } from 'bun:test'
+import { treaty } from '@elysiajs/eden'
 
 import { app } from '@api'
 
+const api = treaty(app)
+
 describe('core', () => {
     it('works', async () => {
-        const response = await app
-            .handle(new Request('http://localhost:3000'))
-            .then((x) => x.text())
+        const { data } = await api.get()
 
-        expect(response).toBe('Hello Elysia')
+        expect(data).toBe('Hello World')
     })
 })
