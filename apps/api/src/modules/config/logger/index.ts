@@ -40,11 +40,11 @@ export const logger = new Elysia({ name: 'logger' })
                     }
                 }
             },
-            /* customProps: ({ user }) => {
+            customProps: ({ user }) => {
                 const props = {}
                 if (user) return { ...props, user }
                 return props
-            }, */
+            },
             level: EnvironmentVariables.LOG_LEVEL,
             transport:
                 EnvironmentVariables.NODE_ENV === 'local'

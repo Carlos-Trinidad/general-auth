@@ -4,7 +4,7 @@ import { config, EnvironmentVariables } from '@api/modules/config'
 
 export const app = new Elysia({ name: 'app' })
     .use(config)
-    .get('/', () => 'Hello World')
+    .get('/ping', () => 'pong')
     .listen(EnvironmentVariables.PORT)
 
 process.on('exit', app.stop)

@@ -7,8 +7,8 @@ const api = treaty(app)
 
 describe('core', () => {
     it('works', async () => {
-        const { data } = await api.get()
+        const { data } = await api.ping.get()
 
-        expect(data).toBe('Hello World')
+        expect(data).toBe('pong')
     })
 })
