@@ -1,5 +1,5 @@
 import { cors as Cors } from '@elysiajs/cors'
-import { EnvironmentVariables } from '@api/modules/config'
+import { EnvironmentVariables } from '@api/config'
 
 export const cors = Cors({
     origin: EnvironmentVariables.ORIGIN

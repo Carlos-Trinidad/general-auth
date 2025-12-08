@@ -1,5 +1,5 @@
 import { openapi as openApi, fromTypes } from '@elysiajs/openapi'
-import { EnvironmentVariables } from '@api/modules/config'
+import { EnvironmentVariables } from '@api/config'
 
 export const openapi = openApi({
     references: fromTypes(

@@ -4,7 +4,7 @@ import {
     serializers,
     serializeRequest
 } from '@bogeychan/elysia-logger'
-import { EnvironmentVariables } from '@api/modules/config/environment'
+import { EnvironmentVariables } from '@api/config/environment'
 
 import { version, name } from 'package.json'
 
