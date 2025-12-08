@@ -16,14 +16,14 @@ describe('healthz', () => {
             expect(status).toBe(200)
         })
 
-        it('should return ok status in response body', async () => {
+        it('should return up status in response body', async () => {
             const app = new Elysia().use(healthz)
             const api = treaty(app)
 
             const { data } = await api.healthz.live.get()
 
             expect(data).toEqual({
-                status: 'ok'
+                status: 'up'
             })
         })
     })
@@ -38,13 +38,13 @@ describe('healthz', () => {
             expect(status).toBe(200)
         })
 
-        it('should return ready status in response body', async () => {
+        it('should return up status in response body', async () => {
             const app = new Elysia().use(healthz)
             const api = treaty(app)
 
             const { data } = await api.healthz.ready.get()
 
-            expect(data).toHaveProperty('status', 'ready')
+            expect(data).toHaveProperty('status', 'up')
         })
 
         it('should include checks object', async () => {
@@ -70,8 +70,8 @@ describe('healthz', () => {
             // Mock the perform function to return failing checks
             const performSpy = spyOn(HealthzChecks, 'perform')
             performSpy.mockResolvedValue({
-                database: 'unavailable',
-                application: 'ok'
+                database: 'down',
+                application: 'up'
             })
 
             const app = new Elysia().use(healthz)
@@ -81,7 +81,7 @@ describe('healthz', () => {
 
             expect(response.status).toBe(503)
             expect(response.error).toBeDefined()
-            expect(response.error?.value).toHaveProperty('status', 'not ready')
+            expect(response.error?.value).toHaveProperty('status', 'down')
 
             const errorValue = response.error?.value as {
                 status: string
