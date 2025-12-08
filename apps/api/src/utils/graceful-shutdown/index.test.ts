@@ -23,9 +23,10 @@ describe('gracefulShutdown', () => {
         consoleLogSpy = mock(() => {})
         console.log = consoleLogSpy
 
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         originalExit = process.exit
         processExitSpy = mock(() => {})
-        // biome-ignore lint/suspicious/noExplicitAny: mocking process.exit for testing
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         process.exit = processExitSpy as any
     })
 
