@@ -1,37 +1,22 @@
-import { Elysia, t } from 'elysia'
+import { Elysia } from 'elysia'
+import { HealthzChecks } from '@api/modules/healthz/service'
+import { HealthzModels } from '@api/modules/healthz/model'
 
 export const healthz = new Elysia({ name: 'healthz', prefix: '/healthz' })
-    .get(
-        '/live',
-        () => ({
-            status: 'ok'
-        }),
-        {
-            response: {
-                200: t.Object({
-                    status: t.String()
-                })
-            }
-        }
-    )
+    .model({
+        'healthz.live': HealthzModels.liveResponse,
+        'healthz.ready': HealthzModels.readyResponse
+    })
+    .get('/live', () => ({ status: 'ok' }), {
+        response: 'healthz.live'
+    })
     .get(
         '/ready',
-        ({ status }) => {
-            const checks: Record<string, string> = {}
-            const isReady = true
-
-            // TODO: Add actual dependency checks here
-            // Example: Check database connection
-            // try {
-            //     await db.ping()
-            //     checks.database = 'ok'
-            // } catch (err) {
-            //     checks.database = 'unavailable'
-            //     isReady = false
-            // }
-
-            // For now, assume ready if the app is running
-            checks.application = 'ok'
+        async ({ status }) => {
+            const checks = await HealthzChecks.perform()
+            const isReady = Object.values(checks).every(
+                (check) => check === 'ok'
+            )
 
             if (isReady) {
                 return {
@@ -47,14 +32,8 @@ export const healthz = new Elysia({ name: 'healthz', prefix: '/healthz' })
         },
         {
             response: {
-                200: t.Object({
-                    status: t.String(),
-                    checks: t.Record(t.String(), t.String())
-                }),
-                503: t.Object({
-                    status: t.String(),
-                    checks: t.Record(t.String(), t.String())
-                })
+                200: 'healthz.ready',
+                503: 'healthz.ready'
             }
         }
     )
