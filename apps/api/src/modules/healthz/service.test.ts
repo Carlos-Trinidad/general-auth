@@ -9,10 +9,10 @@ describe('HealthzChecks', () => {
             expect(result).toBeTypeOf('object')
         })
 
-        it('should return application status as ok', async () => {
+        it('should return application status as up', async () => {
             const result = await HealthzChecks.perform()
 
-            expect(result).toHaveProperty('application', 'ok')
+            expect(result).toHaveProperty('application', 'up')
         })
 
         it('should return Record<string, string> type', async () => {

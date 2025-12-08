@@ -63,7 +63,7 @@ describe('healthz', () => {
 
             const { data } = await api.healthz.ready.get()
 
-            expect(data?.checks).toHaveProperty('application', 'ok')
+            expect(data?.checks).toHaveProperty('application', 'up')
         })
 
         it('should return 503 when health checks fail', async () => {
@@ -87,8 +87,8 @@ describe('healthz', () => {
                 status: string
                 checks: Record<string, string>
             }
-            expect(errorValue?.checks).toHaveProperty('database', 'unavailable')
-            expect(errorValue?.checks).toHaveProperty('application', 'ok')
+            expect(errorValue?.checks).toHaveProperty('database', 'down')
+            expect(errorValue?.checks).toHaveProperty('application', 'up')
 
             // Restore the original implementation
             performSpy.mockRestore()
