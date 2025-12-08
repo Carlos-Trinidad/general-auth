@@ -1,10 +1,12 @@
 import { Elysia } from 'elysia'
 
 import { config, EnvironmentVariables } from '@api/config'
+import { healthz } from './modules'
 import { gracefulShutdown } from './utils'
 
 export const app = new Elysia({ name: 'app' })
     .use(config)
+    .use(healthz)
     .get('/ping', () => 'pong')
     .onStop(gracefulShutdown)
     .listen(EnvironmentVariables.PORT)
