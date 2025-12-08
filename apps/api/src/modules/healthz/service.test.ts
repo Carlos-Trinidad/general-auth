@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'bun:test'
+import type { HealthzChecksResponse } from './model'
 import { HealthzChecks } from './service'
 
 describe('HealthzChecks', () => {
@@ -15,17 +16,20 @@ describe('HealthzChecks', () => {
             expect(result).toHaveProperty('application', 'up')
         })
 
-        it('should return Record<string, string> type', async () => {
+        it('should return HealthzChecksResponse type', async () => {
             const result = await HealthzChecks.perform()
 
-            // Verify all values are strings
-            Object.values(result).forEach((value) => {
-                expect(value).toBeTypeOf('string')
+            // Type assertion to ensure it matches HealthzChecksResponse
+            const typedResult: HealthzChecksResponse = result
+
+            // Verify all values are either 'up' or 'down'
+            Object.values(typedResult).forEach((value) => {
+                expect(['up', 'down']).toContain(value)
             })
 
-            // Verify all keys are strings
-            Object.keys(result).forEach((key) => {
-                expect(key).toBeTypeOf('string')
+            // Verify all keys are either 'application' or 'database'
+            Object.keys(typedResult).forEach((key) => {
+                expect(['application', 'database']).toContain(key)
             })
         })
 
