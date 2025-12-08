@@ -11,7 +11,7 @@ export const healthz = new Elysia({
         'healthz.live': HealthzModels.liveResponse,
         'healthz.ready': HealthzModels.readyResponse
     })
-    .get('/live', () => ({ status: 'up' as const }), {
+    .get('/live', ({ status }) => status(200, { status: 'up' }), {
         detail: {
             summary: 'Liveness probe',
             description: 'Check if the application is alive and running',
@@ -30,14 +30,14 @@ export const healthz = new Elysia({
             )
 
             if (isReady) {
-                return {
-                    status: 'up' as const,
+                return status(200, {
+                    status: 'up',
                     checks
-                }
+                })
             }
 
             return status(503, {
-                status: 'down' as const,
+                status: 'down',
                 checks
             })
         },
