@@ -54,7 +54,7 @@ describe('healthz', () => {
             const { data } = await api.healthz.ready.get()
 
             expect(data).toHaveProperty('checks')
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+
             expect(data?.checks).toBeTypeOf('object')
         })
 
@@ -64,7 +64,6 @@ describe('healthz', () => {
 
             const { data } = await api.healthz.ready.get()
 
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             expect(data?.checks).toHaveProperty('application', 'up')
         })
 
