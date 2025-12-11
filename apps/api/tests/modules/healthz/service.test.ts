@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'bun:test'
-import type { HealthzChecksResponse } from './model'
-import { HealthzChecks } from './service'
+import type { HealthzChecksResponse } from '@api/modules/healthz/model'
+import { HealthzChecks } from '@api/modules/healthz/service'
 
 describe('HealthzChecks', () => {
     describe('perform', () => {

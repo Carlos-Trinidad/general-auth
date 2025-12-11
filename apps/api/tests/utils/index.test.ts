@@ -8,7 +8,7 @@ import {
     jest
 } from 'bun:test'
 
-import { gracefulShutdown } from './index'
+import { Utils } from '../../src/utils'
 
 describe('gracefulShutdown', () => {
     let consoleLogSpy: ReturnType<typeof mock>
@@ -37,7 +37,7 @@ describe('gracefulShutdown', () => {
     })
 
     it('should log goodbye message after 5 seconds', () => {
-        gracefulShutdown()
+        Utils.gracefulShutdown()
 
         jest.advanceTimersByTime(5000)
 
@@ -45,7 +45,7 @@ describe('gracefulShutdown', () => {
     })
 
     it('should call process.exit after 5 seconds', () => {
-        gracefulShutdown()
+        Utils.gracefulShutdown()
 
         jest.advanceTimersByTime(5000)
 
@@ -53,14 +53,14 @@ describe('gracefulShutdown', () => {
     })
 
     it('should not call process.exit immediately', () => {
-        gracefulShutdown()
+        Utils.gracefulShutdown()
 
         expect(processExitSpy).not.toHaveBeenCalled()
         expect(consoleLogSpy).not.toHaveBeenCalled()
     })
 
     it('should not call process.exit before 5 seconds', () => {
-        gracefulShutdown()
+        Utils.gracefulShutdown()
 
         jest.advanceTimersByTime(4999)
 

@@ -2,7 +2,7 @@ import { describe, it, expect, spyOn } from 'bun:test'
 import { treaty } from '@elysiajs/eden'
 import { Elysia } from 'elysia'
 
-import { healthz } from '.'
+import { healthz } from '@api/modules/healthz'
 import { HealthzChecks } from '@api/modules/healthz/service'
 
 describe('healthz', () => {

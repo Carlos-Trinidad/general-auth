@@ -25,6 +25,6 @@
             "@ui/layouts": ["../../packages/ui/src/layouts/index.ts"]
         }
     },
-    "include": ["src", "test", "scripts", "eslint.config.mjs"],
+    "include": ["src", "test", "scripts", "eslint.config.mjs", "tests/modules/healthz/index.test.ts", "tests/modules/healthz/service.test.ts", "tests/utils/index.test.ts"],
     "exclude": ["node_modules", "dist", "drizzle.config.ts"]
 }

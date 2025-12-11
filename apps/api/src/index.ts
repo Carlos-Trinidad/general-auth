@@ -2,12 +2,12 @@ import { Elysia } from 'elysia'
 
 import { config, EnvironmentVariables } from '@api/config'
 import { healthz } from '@api/modules'
-import { gracefulShutdown } from '@api/utils'
+import { Utils } from '@api/utils'
 
 export const app = new Elysia({ name: 'app' })
     .use(config)
     .use(healthz)
-    .onStop(gracefulShutdown)
+    .onStop(Utils.gracefulShutdown)
     .listen(EnvironmentVariables.PORT)
 
 process.on('exit', app.stop)
